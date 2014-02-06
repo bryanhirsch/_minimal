@@ -1,8 +1,7 @@
 <?php
-
 /**
  * @file
- * Enables modules and site configuration for a minimal_ci site installation.
+ * Enables modules and site configuration for a minimal site installation.
  */
 
 /**
