@@ -1,6 +1,7 @@
 api = 2
 core = 7.x
-includes[] = drupal-org-core.make
+includes[core] = drupal-org-core.make
+includes[contrib] = drupal-org.make
 
 projects[minimal_ci][type] = "profile"
 projects[minimal_ci][download][type] = "git"
