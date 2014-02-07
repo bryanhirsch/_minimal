@@ -1,0 +1,1 @@
+projects/minimal_ci/drupal-org.make

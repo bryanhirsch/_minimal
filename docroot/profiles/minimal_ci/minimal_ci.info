@@ -1,6 +1,0 @@
-name = Minimal CI
-description = Core minimal install profile, set up for continuous integration.
-version = VERSION
-core = 7.x
-dependencies[] = block
-dependencies[] = dblog
