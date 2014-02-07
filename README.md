@@ -11,3 +11,6 @@ Build a fresh site:
 
 Run tests locally (tears down site and starts with a fresh build):
   $ ant run-tests
+
+Rebuild: 
+  drush site-make ./mysite.config.yml -v
