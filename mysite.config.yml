@@ -1,0 +1,12 @@
+target: docroot
+build_file: build-minimal_ci.make
+subtrees:
+  minimal_ci:
+    path: docroot/profiles/minimal_ci
+    uri: 'https://github.com/bryanhirsch/minimal_ci.git'
+    branch: 7.x-1.x
+    squash: false
+commands:
+  - 'rm -rf docroot/sites/default; cd docroot/sites; ln -s ../../symlink-these/default default'
+  - 'rm -rf docroot/.htaccess; cd docroot/; ln -s ../symlink-these/.htaccess .htaccess'
+  - 'rm -rf docroot/robots.txt; cd docroot/; ln -s ../symlink-these/robots.txt robots.txt'
