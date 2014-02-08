@@ -95,7 +95,7 @@
       <arg value="${composer}"/>
       <arg value="--working-dir=${builddir}"/>
       <arg value="require"/>
-      <arg value="drush/drush:~6.0"/>
+      <arg value="drush/drush"/>
     </exec>
   </target>
 
@@ -104,8 +104,9 @@
     <!-- Run drush make into ./build/drupal -->
     <exec executable="${drush}" taskname="drush">
       <env key="DRUSH_PHP" value="${php}"/>
-      <arg value="make"/>
-      <arg value="--nocolor"/>
+      <arg value="site-make"/>
+      <arg value="./mysite.config.yml"/>
+      <arg value="--include=projects/site_make"/>
       <arg value="${basedir}/${drush.makefile}"/>
       <arg value="${builddir}/docroot"/>
     </exec>
