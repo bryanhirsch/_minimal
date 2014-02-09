@@ -23,12 +23,11 @@ before_script:
   # Ant build tool configuration
   - cp build.properties.dist build.properties
   - sed -i -e "s,username:password@host/db,travis@127.0.0.1/minimal_ci,g" build.properties
-  - touch TRAVISTEST; ls -la;
-  - sudo ./projects/drush/drush site-make --include=projects/site_make testsite.config.yml -v
+  - sudo ./projects/drush/drush site-make --include=projects/site_make testsite.site_make.yml -v
 
 script:
-  # - ant run-tests
-  # prepare
+# - ant run-tests
+# prepare
 # drush-check, drush-download
 # drush-make
 # install
