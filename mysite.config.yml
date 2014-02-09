@@ -8,6 +8,6 @@ subtrees:
     branch: 7.x-1.x
     squash: false
 commands:
-  - 'rm -rf docroot/sites/default; cd docroot/sites; ln -s ../../symlink-these/default default'
-  - 'rm docroot/.htaccess; cd docroot/; ln -s ../symlink-these/.htaccess .htaccess'
-  - 'rm docroot/robots.txt; cd docroot/; ln -s ../symlink-these/robots.txt robots.txt'
+  - 'rm -rf docroot/sites/default; ln -s ../../symlink-these/default docroot/sites/default'
+  - 'rm docroot/.htaccess; ln -s ../symlink-these/.htaccess docroot/.htaccess'
+  - 'rm docroot/robots.txt; ln -s ../symlink-these/robots.txt docroot/robots.txt'
