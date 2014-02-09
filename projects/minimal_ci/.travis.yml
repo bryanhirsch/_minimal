@@ -23,7 +23,7 @@ before_script:
   # Ant build tool configuration
   - cp build.properties.dist build.properties
   - sed -i -e "s,username:password@host/db,travis@127.0.0.1/minimal_ci,g" build.properties
-  - sudo ./projects/drush/drush site-make --include=projects/site_make testsite.site_make.yml -v
+  # - sudo ./projects/drush/drush site-make --include=projects/site_make testsite.site_make.yml -v
 
 script:
 # - ant run-tests
