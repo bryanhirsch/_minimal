@@ -3,7 +3,8 @@ build_file: build.make
 subtrees:
   minimal_ci:
     path: docroot/profiles/minimal_ci
-    uri: 'https://github.com/bryanhirsch/minimal_ci.git'
+    uri: https://github.com/bryanhirsch/minimal_ci.git
+    message: 'minimal_ci subtree from https://github.com/bryanhirsch/minimal_ci.git 7.x-1.x'
     branch: 7.x-1.x
     squash: false
 commands:
