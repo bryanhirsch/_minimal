@@ -1,0 +1,15 @@
+target: docroot
+build_file: build.make
+subtrees:
+  minimal_ci:
+    path: docroot/profiles/minimal_ci
+    uri: https://github.com/bryanhirsch/minimal_ci.git
+    message: 'minimal_ci subtree from https://github.com/bryanhirsch/minimal_ci.git 7.x-1.x'
+    branch: 7.x-1.x
+    squash: false
+commands:
+  # @todo Add logic to settings.php to make it so we don't have to comment out
+  # the next line.
+  # - 'rm -rf docroot/sites/default; ln -s ../../symlink-these/default docroot/sites/default'
+  - 'rm docroot/.htaccess; ln -s ../symlink-these/.htaccess docroot/.htaccess'
+  - 'rm docroot/robots.txt; ln -s ../symlink-these/robots.txt docroot/robots.txt'
