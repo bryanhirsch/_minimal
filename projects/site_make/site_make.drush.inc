@@ -165,11 +165,8 @@ function drush_site_make($config_file) {
     }
 
     // Remove files checked out by drush. (To be replaced with a symlink.)
-    $path = $details['path'];
-    $commands[] = "rm -r {$path}";
-
     // Add symlink pointing to your local subtree.
-    $commands[] = _site_make_subtree_add_symlink($subtree_name, $path);
+    $commands[] = _site_make_subtree_add_symlink($subtree_name, $details['path']);
   }
 
   // Add custom commands.
@@ -195,13 +192,6 @@ function drush_site_make($config_file) {
  * @return array $config
  */
 function _site_make_get_config($config_file) {
-  if (file_exists($config_file)) {
-    include_once $config_file;
-  }
-  else {
-    return drush_set_error('site_make', dt('Config file does not exist: !here.', array('!here' => $config_file)));
-  }
-
   if (!class_exists('Symfony\Component\Yaml')) {
     // For Drush PSR-0 and Composer information, see http://drupal.org/node/1316322.
     $path = DRUSH_BASE_PATH . '/lib/Yaml-' . DRUSH_YAML_VERSION;
@@ -211,12 +201,12 @@ function _site_make_get_config($config_file) {
     require_once "$path/Inline.php";
   }
   $parser = new Parser();
-  $config = $parser->parse(file_get_contents('mysite.config.yml'));
+  $config = $parser->parse(file_get_contents($config_file));
 
   // If requested, output loaded config
-  if (drush_get_option('show-config')) {
+  if (drush_get_option('show-config', FALSE)) {
     drush_print('$config:');
-    drush_print(print_r($config));
+    drush_print(drush_format($config, NULL, 'yaml'));
   }
 
   return $config;
@@ -434,21 +424,33 @@ function _site_make_subtree_merge($directory, $tag) {
  * @param string $path
  */
 function _site_make_subtree_add_symlink($name, $path) {
-  // Get path to parent directory.
-  $pos = strpos($path, $name);
-  $parent_directory = substr($path, 0, $pos);
+  // Get path to subtree, relative to top-level directory.
+  $prefix = _site_make_get_prefix($name);
+  /*
+  // TODO: Find a better place for this error handling only makes sense at runtime. If this is an
+  // initial build, or a rebuild with new projects, this will always error out,
+  // with the checks being executed here, before the commands actually run.
+  // Make sure $path exists.
+  if (!file_exists($path)) {
+    return drush_set_error('site_make', dt('This directory does not exist: !path'), array('!path' => $path));
+  }
+  // Make sure the subtree exists.
+  if (!file_exists($path)) {
+    return drush_set_error('site_make', dt('This subtree prefix not exist: !prefix'), array('!prefix' => $prefix));
+  }
+  // */
 
   // Get source, relative to parent directory inside docroot.
   $count = count(explode('/', $path));
   $source = '';
-  for ($i = 0; $i < $count; $i++) { 
+  for ($i = 0; $i < $count -1; $i++) { 
     $source .= '../'; 
   };
   // Add prefix to relative source path.
-  $source .= _site_make_get_prefix($name);
+  $source .= $prefix;
 
-  // Change directory to parent directory. Then create symlink.
-  $command = "cd {$parent_directory}; ln -s {$source} {$name};";
+  // Remove the directory. Replace it with a symlink.
+  $command = "rm -rf {$path}; ln -s {$source} {$path};";
 
   return $command;  
 }
